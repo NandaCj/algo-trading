@@ -25,16 +25,10 @@ class DayHighReversalStrategy(AlgoBase):
         pass
 
     def track_placed_order(self, placed_orders):
-        placed_orders.add(self.c_price)
+        pass
 
-    def is_order_already_placed_at_this_condition(self, placed_orders):
-        placed_orders_list = list(placed_orders.read())
-        if len(placed_orders_list) == 0 :
-            print("Placing Order .... ", placed_orders_list)
-            self.track_placed_order(placed_orders)
-        elif self.c_price <= min(placed_orders_list) * 0.992:
-            print("Placing Next Order ....")
-            self.track_placed_order(placed_orders)
+    def is_order_already_placed_at_this_condition(self):
+        pass
 
     # def process(self, element, *args, **kwargs):
     #     print("DayHighReversalStrategy ---> process:", element)

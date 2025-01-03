@@ -3,7 +3,6 @@ from apache_beam.transforms.userstate import BagStateSpec
 import apache_beam as beam
 
 class AlgoBase(ABC, beam.DoFn):
-    placed_orders = BagStateSpec('placed_orders', beam.coders.PickleCoder())
 
     def __init__(self):
         print("AlgoBase INIT ---->")
@@ -22,14 +21,14 @@ class AlgoBase(ABC, beam.DoFn):
         pass
 
     @abstractmethod
-    def track_placed_order(self, data, placed_orders):
+    def track_placed_order(self, data):
         pass
 
     @abstractmethod
-    def is_order_already_placed_at_this_condition(self, placed_orders):
+    def is_order_already_placed_at_this_condition(self):
         pass
 
-    def process(self, element, placed_orders=beam.DoFn.StateParam(placed_orders)):
+    def process(self, element):
         print(f"AlgoBase ---->PROCESS element: {element}")
         stock, data = element
         self.stock = stock
@@ -41,8 +40,8 @@ class AlgoBase(ABC, beam.DoFn):
         is_condition_met = self.condition(data=element)
 
         if is_condition_met:
-            if self.is_order_already_placed_at_this_condition(placed_orders):
+            if self.is_order_already_placed_at_this_condition():
                 self.on_condition_met()
-                self.track_placed_order(data, placed_orders)
+                self.track_placed_order(data)
         else:
             self.on_condition_not_met()

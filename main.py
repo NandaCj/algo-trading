@@ -13,7 +13,6 @@ pipeline = beam.Pipeline(options=p_options)
     | "Break Fusion" >> beam.Reshuffle()
     | "Get Stocks Current Price" >> beam.ParDo(GetStockDataFromYahooApi())  # TODO make this as side input
      # TODO : DoFn to decide on initial order or profit order, for current price
-    | "Break Fusion 1 " >> beam.Reshuffle()  # TODO : Reshuffle is not required here
     | "DayHighReversalStrategy" >> beam.ParDo(DayHighReversalStrategy())  # TODO : The Bag state is the problem here for paralleism
 )
 
