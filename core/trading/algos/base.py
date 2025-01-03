@@ -30,7 +30,7 @@ class AlgoBase(ABC, beam.DoFn):
         pass
 
     def process(self, element, placed_orders=beam.DoFn.StateParam(placed_orders)):
-        # print(f"AlgoBase ---->PROCESS element: {element}")
+        print(f"AlgoBase ---->PROCESS element: {element}")
         stock, data = element
         self.stock = stock
         self.c_price = data["price"]
